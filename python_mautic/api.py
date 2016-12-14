@@ -15,7 +15,7 @@ class MauticOauth2Client(object):
         """
         :param base_url: str Base URL for Mautic API E.g. `https://<your-domain>.mautic.net`
         :param client_id: str Mautic API Public Key
-        :param client_secret: str Mautic API Secret Key
+        :param client_secret: str Mautic API Secret Key - needed to autorefresh token
         :param scope: list|str
         :param token: dict with access token data
         :param token_updater: function used for token autorefresh.

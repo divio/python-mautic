@@ -2,27 +2,29 @@
 from __future__ import unicode_literals, absolute_import
 
 from pprint import pformat
-from time import time
+import os
 
 from flask import Flask, request, redirect, session, url_for, jsonify
 from requests_oauthlib import OAuth2Session
 
+from python_mautic import MauticOauth2Client, Contacts
 from python_mautic.utils import update_token_tempfile
 
 app = Flask(__name__)
 
-client_id = '1_31smsiab0jacsso4wkc0c0ss0440wgs40wowosccssoc40gock'
-client_secret = '1wu2w2qj8r5wc8soowg0oo8cwk0c0gwg0s0cw0gckcoo0w4sgs'
+client_id = ''  # put here your Mautic API Public Key
+client_secret = ''  # put here your Mautic API Secret Key
 redirect_uri = 'http://localhost:8000/callback'
 
 
-base_url = 'https://antsyferov.mautic.net/'
+base_url = ''  # put here base URL for your Mautic API. E.g. `https://<your-domain>.mautic.net`
+
+base_url = '{}/'.format(base_url.strip(' /'))
 authorization_base_url = base_url + 'oauth/v2/authorize'
 token_url = base_url + 'oauth/v2/token'
 refresh_url = token_url
 
 api_base_url = base_url + 'api/'
-contacts_url = api_base_url + 'contacts'
 
 extra = {
     'client_id': client_id,
@@ -59,7 +61,7 @@ def callback():
 
     # We use the session as a simple DB for this example.
     session['oauth_token'] = token
-    update_token_tempfile(token)
+    update_token_tempfile(token)  # store token in /tmp/mautic_creds.json
 
     return redirect(url_for('.menu'))
 
@@ -72,9 +74,6 @@ def menu():
     <h2>What would you like to do next?</h2>
     <ul>
         <li><a href="/contacts"> Get contacts</a></li>
-        <li><a href="/automatic_refresh"> Implicitly refresh the token</a></li>
-        <li><a href="/manual_refresh"> Explicitly refresh the token</a></li>
-        <li><a href="/validate"> Validate the token</a></li>
     </ul>
 
     <pre>
@@ -87,50 +86,19 @@ def menu():
 def contacts():
     """Fetching a protected resource using an OAuth 2 token.
     """
-    mautic = OAuth2Session(client_id, token=session['oauth_token'])
-    return jsonify(mautic.get(contacts_url).json())
+    mautic = MauticOauth2Client(base_url=base_url,
+                                client_id=client_id,
+                                client_secret=client_secret,
+                                token=session['oauth_token'],
+                                token_updater=update_token_tempfile)
+    return jsonify(Contacts(client=mautic).get_list())
 
-
-@app.route("/automatic_refresh", methods=["GET"])
-def automatic_refresh():
-    """Refreshing an OAuth 2 token using a refresh token.
-    """
-    token = session['oauth_token']
-
-    # We force an expiration by setting expired at in the past.
-    # This will trigger an automatic refresh next time we interact with
-    token['expires_at'] = time() - 10
-
-    def token_updater(token):
-        session['oauth_token'] = token
-
-    mautic = OAuth2Session(client_id,
-                           token=token,
-                           auto_refresh_kwargs=extra,
-                           auto_refresh_url=refresh_url,
-                           token_updater=token_updater)
-
-    # Trigger the automatic refresh
-    return jsonify(session['oauth_token'])
-
-
-@app.route("/manual_refresh", methods=["GET"])
-def manual_refresh():
-    """Refreshing an OAuth 2 token using a refresh token.
-    """
-    token = session['oauth_token']
-
-    mautic = OAuth2Session(client_id, token=token)
-    session['oauth_token'] = mautic.refresh_token(refresh_url, **extra)
-    token = jsonify(session['oauth_token'])
-    return token
 
 if __name__ == "__main__":
     app.config['DEBUG'] = True
-    app.config['SECRET_KEY'] = 'A0Zr98j/3yXqewqweqqrqwr/,?RT'
+    app.config['SECRET_KEY'] = 'not_to_be_used_in_production'
     app.config['SERVER_NAME'] = 'localhost:8000'
-    import os
+
     os.environ['DEBUG'] = '1'
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-    os.environ['WERKZEUG_DEBUG_PIN'] = 'off'
     app.run(host='localhost', port=8000)
