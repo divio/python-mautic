@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
+
+from mautic import __version__
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -10,35 +13,30 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'requests-oauthlib==0.7.0',
+    'requests-oauthlib',
 ]
 
 test_requirements = []
 
 setup(
-    name='python_mautic',
-    version='0.1.0',
-    description="Python wrapper for Mautic API",
+    name='mautic',
+    version=__version__,
+    description='Python wrapper for Mautic API',
     long_description=readme + '\n\n' + history,
-    author="Steelkiwi",
-    author_email='hello@steelkiwi.com',
+    author='Divio AG',
+    author_email='info@divio.com',
     url='https://github.com/divio/python-mautic',
-    packages=[
-        'python_mautic',
-    ],
-    package_dir={'python_mautic':
-                 'python_mautic'},
+    packages=find_packages(),
     include_package_data=True,
     install_requires=requirements,
-    license="MIT license",
+    license='LICENSE',
     zip_safe=False,
-    keywords='python_mautic',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',

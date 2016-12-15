@@ -29,6 +29,4 @@ from .stats import Stats
 from .users import Users
 
 
-__author__ = """Steelkiwi"""
-__email__ = 'hello@steelkiwi.com'
 __version__ = '0.1.0'
