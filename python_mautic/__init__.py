@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
-from .exceptions import (ActionNotSupportedException, ContextNotFoundException,
-                         MauticException, UnexpectedResponseFormatException)
+from .exceptions import (
+    ActionNotSupportedException,
+    ContextNotFoundException,
+    MauticException,
+    UnexpectedResponseFormatException,
+)
 from .api import MauticOauth2Client
 from .assets import Assets
 from .campaigns import Campaigns
@@ -27,6 +31,5 @@ from .smses import Smses
 from .stages import Stages
 from .stats import Stats
 from .users import Users
-
 
 __version__ = '0.1.0'

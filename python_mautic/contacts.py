@@ -20,7 +20,9 @@ class Contacts(API):
 
         :return: dict|str
         """
-        response = self._client.session.get('{url}/list/owners'.format(url=self.endpoint_url))
+        response = self._client.session.get(
+            '{url}/list/owners'.format(url=self.endpoint_url)
+        )
         return self.process_response(response)
 
     def get_field_list(self):
@@ -29,7 +31,9 @@ class Contacts(API):
 
         :return: dict|str
         """
-        response = self._client.session.get('{url}/list/fields'.format(url=self.endpoint_url))
+        response = self._client.session.get(
+            '{url}/list/fields'.format(url=self.endpoint_url)
+        )
         return self.process_response(response)
 
     def get_segments(self):
@@ -38,11 +42,21 @@ class Contacts(API):
 
         :return: dict|str
         """
-        response = self._client.session.get('{url}/list/segments'.format(url=self.endpoint_url))
+        response = self._client.session.get(
+            '{url}/list/segments'.format(url=self.endpoint_url)
+        )
         return self.process_response(response)
 
-    def get_events(self, obj_id, search='', include_events=None, exclude_events=None, order_by='',
-                   order_by_dir='ASC', page=1):
+    def get_events(
+        self,
+        obj_id,
+        search='',
+        include_events=None,
+        exclude_events=None,
+        order_by='',
+        order_by_dir='ASC',
+        page=1
+    ):
         """
         Get a list of a contact's engagement events
 
@@ -68,11 +82,23 @@ class Contacts(API):
             'orderByDir': order_by_dir,
             'page': page
         }
-        response = self._client.session.get('{url}/{id}/events'.format(url=self.endpoint_url, id=obj_id),
-                                            params=parameters)
+        response = self._client.session.get(
+            '{url}/{id}/events'.format(
+                url=self.endpoint_url, id=obj_id
+            ),
+            params=parameters
+        )
         return self.process_response(response)
 
-    def get_contact_notes(self, obj_id, search='', start=0, limit=0, order_by='', order_by_dir='ASC'):
+    def get_contact_notes(
+        self,
+        obj_id,
+        search='',
+        start=0,
+        limit=0,
+        order_by='',
+        order_by_dir='ASC'
+    ):
         """
         Get a list of a contact's notes
 
@@ -92,8 +118,12 @@ class Contacts(API):
             'orderBy': order_by,
             'orderByDir': order_by_dir,
         }
-        response = self._client.session.get('{url}/{id}/notes'.format(url=self.endpoint_url, id=obj_id),
-                                            params=parameters)
+        response = self._client.session.get(
+            '{url}/{id}/notes'.format(
+                url=self.endpoint_url, id=obj_id
+            ),
+            params=parameters
+        )
         return self.process_response(response)
 
     def get_contact_segments(self, obj_id):
@@ -104,7 +134,11 @@ class Contacts(API):
         :return: dict|str
         """
 
-        response = self._client.session.get('{url}/{id}/segments'.format(url=self.endpoint_url, id=obj_id))
+        response = self._client.session.get(
+            '{url}/{id}/segments'.format(
+                url=self.endpoint_url, id=obj_id
+            )
+        )
         return self.process_response(response)
 
     def get_contact_campaigns(self, obj_id):
@@ -115,7 +149,11 @@ class Contacts(API):
         :return: dict|str
         """
 
-        response = self._client.session.get('{url}/{id}/campaigns'.format(url=self.endpoint_url, id=obj_id))
+        response = self._client.session.get(
+            '{url}/{id}/campaigns'.format(
+                url=self.endpoint_url, id=obj_id
+            )
+        )
         return self.process_response(response)
 
     def add_points(self, obj_id, points, **kwargs):
@@ -128,8 +166,12 @@ class Contacts(API):
         :return: dict|str
         """
 
-        response = self._client.session.post('{url}/{id}/points/plus/{points}'.format(
-            url=self.endpoint_url, id=obj_id, points=points), data=kwargs)
+        response = self._client.session.post(
+            '{url}/{id}/points/plus/{points}'.format(
+                url=self.endpoint_url, id=obj_id, points=points
+            ),
+            data=kwargs
+        )
         return self.process_response(response)
 
     def subtract_points(self, obj_id, points, **kwargs):
@@ -142,11 +184,22 @@ class Contacts(API):
         :return: dict|str
         """
 
-        response = self._client.session.post('{url}/{id}/points/minus/{points}'.format(
-            url=self.endpoint_url, id=obj_id, points=points), data=kwargs)
+        response = self._client.session.post(
+            '{url}/{id}/points/minus/{points}'.format(
+                url=self.endpoint_url, id=obj_id, points=points
+            ),
+            data=kwargs
+        )
         return self.process_response(response)
 
-    def add_dnc(self, obj_id, channel='email', reason=MANUAL, channel_id=None, comments='via API'):
+    def add_dnc(
+        self,
+        obj_id,
+        channel='email',
+        reason=MANUAL,
+        channel_id=None,
+        comments='via API'
+    ):
         """
         Adds Do Not Contact
 
@@ -162,8 +215,12 @@ class Contacts(API):
             'channelId': channel_id,
             'comments': comments
         }
-        response = self._client.session.post('{url}/{id}/dnc/add/{channel}'.format(
-            url=self.endpoint_url, id=obj_id, channel=channel), data=data)
+        response = self._client.session.post(
+            '{url}/{id}/dnc/add/{channel}'.format(
+                url=self.endpoint_url, id=obj_id, channel=channel
+            ),
+            data=data
+        )
         return self.process_response(response)
 
     def remove_dnc(self, obj_id, channel):
@@ -174,6 +231,9 @@ class Contacts(API):
         :param channel: str
         :return: dict|str
         """
-        response = self._client.session.post('{url}/{id}/dnc/remove/{channel}'.format(
-            url=self.endpoint_url, id=obj_id, channel=channel))
+        response = self._client.session.post(
+            '{url}/{id}/dnc/remove/{channel}'.format(
+                url=self.endpoint_url, id=obj_id, channel=channel
+            )
+        )
         return self.process_response(response)

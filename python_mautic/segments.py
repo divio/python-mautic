@@ -16,6 +16,11 @@ class Segments(API):
         :return: dict|str
         """
 
-        response = self._client.session.post('{url}/{segment_id}/contact/add/{contact_id}'.format(
-            url=self.endpoint_url, segment_id=segment_id, contact_id=contact_id))
+        response = self._client.session.post(
+            '{url}/{segment_id}/contact/add/{contact_id}'.format(
+                url=self.endpoint_url,
+                segment_id=segment_id,
+                contact_id=contact_id
+            )
+        )
         return self.process_response(response)

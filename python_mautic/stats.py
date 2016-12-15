@@ -25,21 +25,35 @@ class Stats(API):
             if arg in locals() and locals()[arg]:
                 parameters[arg] = locals()[arg]
 
-        response = self._client.session.get('{url}/{table}'.format(url=self.endpoint_url, table=table),
-                                           params=parameters)
+        response = self._client.session.get(
+            '{url}/{table}'.format(
+                url=self.endpoint_url, table=table
+            ),
+            params=parameters
+        )
         return self.process_response(response)
 
     def delete(self, obj_id):
         return self.action_not_supported('delete')
 
-    def get_list(self, search='', start=0, limit=0, order_by='', order_by_dir='ASC', published_only=False,
-                 minimal=False):
+    def get_list(
+        self,
+        search='',
+        start=0,
+        limit=0,
+        order_by='',
+        order_by_dir='ASC',
+        published_only=False,
+        minimal=False
+    ):
         return self.action_not_supported('get_list')
 
     def create(self, parameters):
         return self.action_not_supported('create')
 
-    def get_published_list(self, search='', start=0, limit=0, order_by='', order_by_dir='ASC'):
+    def get_published_list(
+        self, search='', start=0, limit=0, order_by='', order_by_dir='ASC'
+    ):
         return self.action_not_supported('get_published_list')
 
     def edit(self, obj_id, parameters, create_if_not_exists=False):

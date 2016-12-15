@@ -13,7 +13,9 @@ class Users(API):
 
         :return: dict|str
         """
-        response = self._client.session.get('{url}/self'.format(url=self.endpoint_url))
+        response = self._client.session.get(
+            '{url}/self'.format(url=self.endpoint_url)
+        )
         return self.process_response(response)
 
     def check_permission(self, obj_id, permissions):
@@ -24,6 +26,10 @@ class Users(API):
         :param permissions: str|list|tuple
         :return: dict|str
         """
-        response = self._client.session.post('{url}/{id}/permissioncheck'.format(url=self.endpoint_url, id=obj_id),
-                                             data={'permissions': permissions})
+        response = self._client.session.post(
+            '{url}/{id}/permissioncheck'.format(
+                url=self.endpoint_url, id=obj_id
+            ),
+            data={'permissions': permissions}
+        )
         return self.process_response(response)

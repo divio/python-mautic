@@ -16,8 +16,12 @@ class Forms(API):
         :return: dict|str
         """
 
-        response = self._client.session.delete('{url}/{form_id}/fields/delete'.format(
-            url=self.endpoint_url, form_id=form_id), params={'fields': field_ids})
+        response = self._client.session.delete(
+            '{url}/{form_id}/fields/delete'.format(
+                url=self.endpoint_url, form_id=form_id
+            ),
+            params={'fields': field_ids}
+        )
         return self.process_response(response)
 
     def delete_actions(self, form_id, action_ids):
@@ -29,7 +33,10 @@ class Forms(API):
         :return: dict|str
         """
 
-        response = self._client.session.delete('{url}/{form_id}/actions/delete'.format(
-            url=self.endpoint_url, form_id=form_id), params={'actions': action_ids})
+        response = self._client.session.delete(
+            '{url}/{form_id}/actions/delete'.format(
+                url=self.endpoint_url, form_id=form_id
+            ),
+            params={'actions': action_ids}
+        )
         return self.process_response(response)
-

@@ -14,7 +14,11 @@ class Emails(API):
         :param obj_id: int
         :return: dict|str
         """
-        response = self._client.session.post('{url}/{id}/send'.format(url=self.endpoint_url, id=obj_id))
+        response = self._client.session.post(
+            '{url}/{id}/send'.format(
+                url=self.endpoint_url, id=obj_id
+            )
+        )
         return self.process_response(response)
 
     def send_to_contact(self, obj_id, contact_id):
@@ -25,6 +29,9 @@ class Emails(API):
         :param contact_id: int
         :return: dict|str
         """
-        response = self._client.session.post('{url}/{id}/send/contact/{contact_id}'.format(
-            url=self.endpoint_url, id=obj_id, contact_id=contact_id))
+        response = self._client.session.post(
+            '{url}/{id}/send/contact/{contact_id}'.format(
+                url=self.endpoint_url, id=obj_id, contact_id=contact_id
+            )
+        )
         return self.process_response(response)
