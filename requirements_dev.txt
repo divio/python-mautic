@@ -3,3 +3,4 @@ tox
 coverage
 Sphinx
 Flask
+yapf
