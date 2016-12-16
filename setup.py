@@ -1,15 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import re
 
 from setuptools import setup, find_packages
 
-from mautic import __version__
 
+with open('mautic/__init__.py', 'r') as fd:
+    version = re.search(
+        r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+        fd.read(), re.MULTILINE
+    ).group(1)
 
-with open('README.rst') as readme_file:
+with open('README.rst', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open('HISTORY.rst', 'r') as history_file:
     history = history_file.read()
 
 requirements = [
@@ -20,7 +25,7 @@ test_requirements = []
 
 setup(
     name='mautic',
-    version=__version__,
+    version=version,
     description='Python wrapper for Mautic API',
     long_description=readme + '\n\n' + history,
     author='Divio AG',
