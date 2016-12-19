@@ -80,7 +80,10 @@ class API(object):
     def process_response(response):
         if response.ok:
             return response.json()
-        else:
+        try:
+            return response.json()
+        except ValueError:
+            # no json object could be decoded
             return response.content
 
     @staticmethod

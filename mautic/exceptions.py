@@ -15,6 +15,15 @@ class MauticException(Exception):
         else:
             self.message = self.default_message
 
+    def __repr__(self):
+        return '{} {}'.format(
+            type(self).__name__,
+            self.message,
+        )
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class ActionNotSupportedException(MauticException):
     """
