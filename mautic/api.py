@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
+import requests
 from requests_oauthlib import OAuth2Session
 
 
@@ -44,6 +45,25 @@ class MauticOauth2Client(object):
         self.session = OAuth2Session(
             client_id, scope=scope, token=token, **kwargs
         )
+
+
+class MauticBasicAuthClient(object):
+    def __init__(
+        self,
+        base_url,
+        username,
+        password
+    ):
+        """
+        :param base_url: str Base URL for Mautic API E.g. `https://<your-domain>.mautic.net`
+        :param username: str Mautic Username
+        :param password: str Mautic Password
+        """
+
+        self.base_url = base_url.strip(' /')
+
+        self.session = requests.Session()
+        self.session.auth = (username, password)
 
 
 class API(object):

@@ -5,7 +5,7 @@ from .exceptions import (
     MauticException,
     UnexpectedResponseFormatException,
 )
-from .api import MauticOauth2Client
+from .api import MauticOauth2Client, MauticBasicAuthClient
 from .assets import Assets
 from .campaigns import Campaigns
 from .categories import Categories
