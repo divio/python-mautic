@@ -4,6 +4,8 @@ from __future__ import unicode_literals, absolute_import
 import requests
 from requests_oauthlib import OAuth2Session
 
+from .exceptions import MauticException
+
 
 class MauticOauth2Client(object):
     def __init__(
@@ -81,10 +83,12 @@ class API(object):
         if response.ok:
             return response.json()
         try:
-            return response.json()
+            data = response.json()
         except ValueError:
             # no json object could be decoded
-            return response.content
+            data = response.content
+
+        raise MauticException(data)
 
     @staticmethod
     def action_not_supported(action):
