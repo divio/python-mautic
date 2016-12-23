@@ -2,5 +2,6 @@ include HISTORY.rst LICENSE README.rst
 
 recursive-include tests *
 
+recursive-exclude apitester *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
